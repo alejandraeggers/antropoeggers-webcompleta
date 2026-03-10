@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antropoeggers | Product Architect & QA Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+        
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #6D28D9;
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #F5F5F5;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .purple-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #C084FC, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 40px -20px rgba(139, 92, 246, 0.3);
+        }
+
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(139, 92, 246, 0.12);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 10s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(20px, 20px); }
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="blob top-[-100px] right-[-100px]"></div>
+    <div class="blob bottom-[-100px] left-[-100px]"></div>
+
+    <!-- Navegación -->
+    <nav class="fixed w-[90%] md:w-full max-w-6xl z-50 glass px-6 py-4 mt-6 left-1/2 -translate-x-1/2 rounded-3xl flex justify-between items-center transition-all duration-300">
+        <div class="text-2xl font-bold font-heading tracking-tighter flex items-center gap-2">
+            <div class="w-8 h-8 purple-gradient rounded-lg flex items-center justify-center">
+                <span class="text-white text-xs">AE</span>
+            </div>
+            ANTROPO<span class="text-[#8B5CF6]">EGGERS</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium items-center">
+            <a href="#manifiesto" class="nav-link transition">Manifiesto</a>
+            <a href="#servicios" class="nav-link transition">Servicios</a>
+            <a href="#proyectos" class="nav-link transition">Portafolio</a>
+            <a href="dianostico.html" class="nav-link transition text-[#8B5CF6] font-bold flex items-center gap-2">
+                <i class="fa-solid fa-bolt"></i> Diagnóstico MVP
+            </a>
+            <a href="#contacto" class="nav-link transition">Contacto</a>
+        </div>
+        <a href="#contacto" class="purple-gradient px-6 py-2.5 rounded-2xl text-sm font-bold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+            Agendar Consulta
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-32 pb-20">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-white/5 mb-8 animate-bounce">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <span class="text-xs font-bold text-gray-300 uppercase tracking-widest">Antropología + QA + AI Development</span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-bold leading-[1.1] max-w-5xl mb-8 tracking-tight">
+            Diseñando tecnología con <span class="text-gradient">sentido humano</span>.
+        </h1>
+        <p class="text-gray-400 text-lg md:text-2xl max-w-3xl mb-12 leading-relaxed font-light">
+            No solo construimos software. Incubamos productos digitales bajo una arquitectura técnica robusta y una visión antropológica profunda.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6">
+            <a href="dianostico.html" class="purple-gradient px-10 py-5 rounded-3xl font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-purple-500/25">
+                Evaluar mi Proyecto
+            </a>
+            <a href="#proyectos" class="glass px-10 py-5 rounded-3xl font-bold text-xl hover:bg-white/5 transition-all border-white/10">
+                Ver Portafolio
+            </a>
+        </div>
+    </header>
+
+    <!-- Logotipos Stack -->
+    <div class="py-12 glass border-y border-white/5 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-center md:justify-between items-center gap-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+            <span class="text-xl font-bold">LOVABLE</span>
+            <span class="text-xl font-bold">SQL / POSTGRES</span>
+            <span class="text-xl font-bold">CURSOR</span>
+            <span class="text-xl font-bold">QA AUTOMATION</span>
+            <span class="text-xl font-bold">SUPABASE</span>
+        </div>
+    </div>
+
+    <!-- Manifiesto -->
+    <section id="manifiesto" class="py-32 px-6 max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-16 items-start">
+            <div class="lg:col-span-7">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+                    El código es el medio, el <span class="text-[#8B5CF6]">humano</span> es el fin.
+                </h2>
+                <div class="space-y-6 text-gray-400 text-lg leading-relaxed">
+                    <p>
+                        Vengo de la <strong>Antropología</strong>, donde aprendí que la tecnología solo es útil si respeta el contexto cultural y los hábitos de quien la usa. 
+                    </p>
+                    <p>
+                        A eso le sumé el rigor del <strong>QA & Lean Six Sigma</strong>, asegurando que cada línea de código (generada o escrita) cumpla con los estándares más altos de eficiencia y estabilidad.
+                    </p>
+                </div>
+            </div>
+            <div class="lg:col-span-5">
+                <div class="glass p-12 rounded-[2.5rem] relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 purple-gradient opacity-10 blur-3xl group-hover:opacity-20 transition"></div>
+                    <i class="fa-solid fa-quote-left text-5xl text-[#8B5CF6] mb-8 opacity-20"></i>
+                    <p class="text-2xl font-medium leading-snug mb-8">
+                        "Mi apellido es Eggers y mi método es la incubación. No entrego apps, entrego certezas tecnológicas."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10">
+                            <i class="fa-solid fa-microchip text-[#8B5CF6]"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-xl leading-none mb-1">Eggers</p>
+                            <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Product Architect</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-32 px-6 bg-[#080808]">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Servicios Estratégicos</h2>
+                    <p class="text-gray-500 text-lg">Unidades de negocio diseñadas para blindar tu crecimiento digital con el sello de calidad Eggers.</p>
+                </div>
+                <div class="text-[#8B5CF6] font-bold text-sm tracking-widest uppercase">
+                    [01 — 03]
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- A -->
+                <div class="glass p-10 rounded-[2.5rem] card-hover relative overflow-hidden">
+                    <div class="text-6xl font-bold absolute -right-4 -top-4 opacity-5">A</div>
+                    <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-[#8B5CF6] mb-8">
+                        <i class="fa-solid fa-rocket text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Incubación MVP</h3>
+                    <p class="text-gray-400 mb-8 leading-relaxed">Lanzamientos en 15-30 días. Desarrollo ágil con IA y bases de datos SQL de alto rendimiento.</p>
+                    <div class="pt-6 border-t border-white/5">
+                        <span class="text-xs font-bold text-[#8B5CF6] uppercase tracking-widest">Ver detalles</span>
+                    </div>
+                </div>
+
+                <!-- B -->
+                <div class="glass p-10 rounded-[2.5rem] card-hover border-[#8B5CF6]/30 bg-[#111111]">
+                    <div class="text-6xl font-bold absolute -right-4 -top-4 opacity-5">B</div>
+                    <div class="w-16 h-16 purple-gradient rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl shadow-purple-500/20">
+                        <i class="fa-solid fa-vial-circle-check text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">QA Sostenible</h3>
+                    <p class="text-gray-300 mb-8 leading-relaxed">Planes de calidad Lean para startups. Blindamos tu producto sin frenar tu velocidad.</p>
+                    <div class="pt-6 border-t border-white/5">
+                        <span class="text-xs font-bold text-white uppercase tracking-widest">Más información</span>
+                    </div>
+                </div>
+
+                <!-- D -->
+                <div class="glass p-10 rounded-[2.5rem] card-hover relative overflow-hidden">
+                    <div class="text-6xl font-bold absolute -right-4 -top-4 opacity-5">D</div>
+                    <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-[#8B5CF6] mb-8">
+                        <i class="fa-solid fa-magnifying-glass-chart text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Auditoría Antropo-UX</h3>
+                    <p class="text-gray-400 mb-8 leading-relaxed">Análisis etnográfico para descubrir por qué tus usuarios abandonan tu plataforma.</p>
+                    <div class="pt-6 border-t border-white/5">
+                        <span class="text-xs font-bold text-[#8B5CF6] uppercase tracking-widest">Solicitar auditoría</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portafolio / Proyectos -->
+    <section id="proyectos" class="py-32 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Catálogo de Incubación</h2>
+            <p class="text-gray-500 max-w-xl mx-auto italic">"Una muestra de cómo el entendimiento humano se convierte en arquitectura técnica."</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10">
+            <!-- Proyecto 1 -->
+            <div class="group cursor-pointer">
+                <div class="aspect-video glass rounded-[2.5rem] mb-6 overflow-hidden relative border-white/5">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-10">
+                        <p class="text-sm text-gray-300">Explorar caso de estudio &rarr;</p>
+                    </div>
+                    <div class="w-full h-full bg-[#151515] flex items-center justify-center">
+                        <i class="fa-solid fa-database text-6xl text-white/5 group-hover:scale-110 transition duration-700"></i>
+                    </div>
+                </div>
+                <h4 class="text-2xl font-bold mb-2">Sistema de Gestión Logística</h4>
+                <div class="flex gap-3 text-xs font-bold text-gray-500 uppercase tracking-widest">
+                    <span>SQL</span>
+                    <span>•</span>
+                    <span>LOVABLE</span>
+                    <span>•</span>
+                    <span>QA AUTOMATION</span>
+                </div>
+            </div>
+
+            <!-- Proyecto 2 -->
+            <div class="group cursor-pointer mt-12 md:mt-24">
+                <div class="aspect-video glass rounded-[2.5rem] mb-6 overflow-hidden relative border-white/5">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-10">
+                        <p class="text-sm text-gray-300">Explorar caso de estudio &rarr;</p>
+                    </div>
+                    <div class="w-full h-full bg-[#151515] flex items-center justify-center">
+                        <i class="fa-solid fa-users-viewfinder text-6xl text-white/5 group-hover:scale-110 transition duration-700"></i>
+                    </div>
+                </div>
+                <h4 class="text-2xl font-bold mb-2">Plataforma EdTech "Insight"</h4>
+                <div class="flex gap-3 text-xs font-bold text-gray-500 uppercase tracking-widest">
+                    <span>ANTROPOLOGÍA UX</span>
+                    <span>•</span>
+                    <span>SUPABASE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología -->
+    <section id="metodo" class="py-32 px-6 bg-white text-black rounded-[3rem] md:rounded-[5rem] mx-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-5xl font-bold mb-8 leading-tight">Cómo incubamos el éxito.</h2>
+                    <p class="text-gray-600 text-lg mb-12">Mi método no es lineal, es orgánico. Nos adaptamos a la cultura del problema antes de proponer la tecnología.</p>
+                    <div class="space-y-8">
+                        <div class="flex gap-6">
+                            <div class="text-3xl font-bold text-black/20">01</div>
+                            <div>
+                                <h5 class="font-bold text-xl mb-2">Inmersión Antropológica</h5>
+                                <p class="text-gray-500 text-sm">Entendemos el ecosistema humano y las fricciones reales del usuario.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="text-3xl font-bold text-black/20">02</div>
+                            <div>
+                                <h5 class="font-bold text-xl mb-2">Arquitectura Eggers</h5>
+                                <p class="text-gray-500 text-sm">Diseño de bases de datos y lógica de procesos bajo estándares QA.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="text-3xl font-bold text-black/20">03</div>
+                            <div>
+                                <h5 class="font-bold text-xl mb-2">Incubación (Build)</h5>
+                                <p class="text-gray-500 text-sm">Construcción acelerada con IA y No-Code, sin perder la calidad técnica.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="w-full aspect-square rounded-full border-[20px] border-black/5 flex items-center justify-center">
+                        <div class="w-2/3 h-2/3 rounded-full purple-gradient flex items-center justify-center text-white text-7xl shadow-2xl">
+                            <i class="fa-solid fa-egg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <footer id="contacto" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block p-4 rounded-3xl bg-white/5 mb-8">
+                <i class="fa-solid fa-paper-plane text-3xl text-[#8B5CF6]"></i>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-bold mb-8 tracking-tight">Hablemos de tu próximo hito técnico.</h2>
+            <p class="text-gray-500 text-xl mb-12">Estoy lista para ayudarte a convertir el caos en una arquitectura escalable.</p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-20">
+                <a href="#" class="px-8 py-4 rounded-2xl glass hover:border-[#8B5CF6]/50 transition-all flex items-center gap-3">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#" class="px-8 py-4 rounded-2xl glass hover:border-[#8B5CF6]/50 transition-all flex items-center gap-3">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <a href="mailto:hola@antropoeggers.site" class="px-8 py-4 rounded-2xl purple-gradient font-bold transition-all">
+                    Enviar Email
+                </a>
+            </div>
+
+            <div class="pt-20 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-600 text-sm tracking-widest uppercase font-bold">
+                <div>&copy; 2026 ANTROPOEGGERS</div>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-white transition">Privacidad</a>
+                    <a href="#" class="hover:text-white transition">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

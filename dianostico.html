@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Viabilidad MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color global de la aplicación: Violeta */
+            --color-bg: #0d061a;
+            --color-accent: #7739e2;
+            --color-text: #fdfdfd;
+            --accent-rgb: 119, 57, 226;
+        }
+        
+        /* Tema: Soñador (Naranja solicitado) */
+        body.theme-soñador { 
+            --color-accent: #f59e0b; 
+            --color-bg: #1a0f02; 
+            --accent-rgb: 245, 158, 11;
+        }
+
+        /* Tema: Planificador (Cian anterior) */
+        body.theme-planificador { 
+            --color-accent: #06b6d4; 
+            --color-bg: #08111a; 
+            --accent-rgb: 6, 182, 212;
+        }
+
+        /* Tema: Ejecutor (Verde) */
+        body.theme-ejecutor { 
+            --color-accent: #10b981; 
+            --color-bg: #07120a; 
+            --accent-rgb: 16, 185, 129;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accent-text { color: var(--color-accent) !important; transition: color 0.8s ease; }
+        .accent-bg { background-color: var(--color-accent) !important; transition: background-color 0.8s ease; }
+        .accent-border { border-color: var(--color-accent) !important; transition: border-color 0.8s ease; }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            transition: border-color 0.8s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--color-text);
+            color: #000;
+            transition: all 0.4s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .option-btn {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--color-accent);
+            background: rgba(var(--accent-rgb), 0.1);
+        }
+
+        .progress-bar {
+            height: 3px;
+            background-color: var(--color-accent);
+            transition: width 0.7s ease, background-color 0.8s ease;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="selection:bg-white/20">
+
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="relative z-10 min-h-screen flex items-center justify-center p-6">
+        
+        <!-- Botón de regreso / Home -->
+        <a href="index.html" class="fixed top-6 left-6 md:top-10 md:left-10 text-zinc-500 hover:text-white transition-all flex items-center gap-2 text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold z-50 group glass-panel px-4 py-2 md:px-5 md:py-3 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:-translate-x-1 transition-transform"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Volver
+        </a>
+
+        <!-- Pantalla de Inicio -->
+        <section id="step-start" class="max-w-xl w-full glass-panel p-8 relative">
+            <div class="absolute -top-3 left-8 accent-bg text-black text-[10px] px-2 font-bold py-1 uppercase tracking-widest">AntropoEggers</div>
+            <div class="flex items-center gap-2 accent-text mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span class="text-[10px] tracking-[0.3em] font-bold uppercase">Auditoría 2026</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black mb-4 tracking-tighter uppercase leading-[0.9]">
+                Diagnóstico de <br><span class="accent-text italic">Viabilidad MVP</span>
+            </h1>
+            <p class="text-zinc-500 text-sm mb-8 leading-relaxed font-sans">
+                Sistema de autoevaluación para fundadoras.<br /> Responde bajo honestidad radical. El sistema determinará si tu estructura es sólida o si requiere una poda técnica inmediata.
+            </p>
+            <button onclick="app.startQuiz()" class="btn-primary w-full font-black py-5 px-8 flex items-center justify-center gap-4 text-sm tracking-[0.2em] uppercase">
+                Iniciar Auditoría
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+        </section>
+
+        <!-- Pantalla de Quiz -->
+        <section id="step-quiz" class="max-w-2xl w-full glass-panel p-8 relative hidden">
+            <div class="absolute top-0 left-0 progress-bar" id="progress" style="width: 0%"></div>
+            
+            <div class="flex justify-between items-center mb-10">
+                <span id="quiz-counter" class="accent-text text-[10px] font-bold tracking-[0.4em]">PROTOCOLO 1/05</span>
+                <svg class="text-zinc-700" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+            </div>
+
+            <h3 id="question-category" class="text-zinc-500 text-[10px] mb-2 font-bold tracking-widest uppercase">CATEGORÍA</h3>
+            <p id="question-text" class="text-xl md:text-2xl text-[#fdfdfd] mb-10 font-bold leading-tight">Pregunta</p>
+
+            <div id="options-container" class="space-y-3"></div>
+        </section>
+
+        <!-- Pantalla de Resultado -->
+        <section id="step-result" class="max-w-xl w-full glass-panel border-2 accent-border p-8 relative hidden">
+            <div class="flex flex-col items-center mb-10 text-center">
+                <div id="result-icon" class="w-16 h-16 bg-white/5 flex items-center justify-center mb-4 border accent-border"></div>
+                <span class="text-[10px] font-bold tracking-[0.5em] text-zinc-500 mb-2 uppercase">Veredicto Final</span>
+                <h2 id="result-profile" class="text-5xl font-black italic tracking-tighter accent-text">PERFIL</h2>
+            </div>
+
+            <div class="space-y-6 text-zinc-400 text-sm leading-relaxed mb-10 font-sans">
+                <div class="bg-white/5 p-4 border-l-2 accent-border italic text-xs">
+                    "La viabilidad no se mide en código escrito, sino en suposiciones eliminadas."
+                </div>
+                <p>Tu diagnóstico indica un perfil de <span id="result-profile-inline" class="text-[#fdfdfd] underline font-bold">PERFIL</span>.</p>
+            </div>
+
+            <div class="space-y-3">
+                <input id="email-input" type="email" placeholder="E-MAIL" class="w-full bg-black/40 border border-zinc-800 p-4 text-[10px] tracking-widest focus:accent-border outline-none uppercase transition-all">
+                <button onclick="app.showRoadmap()" id="submit-btn" class="btn-primary w-full py-4 font-black text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-2">
+                    Ver Hoja de Ruta
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Pantalla Hoja de Ruta -->
+        <section id="step-thank-you" class="max-w-2xl w-full glass-panel p-10 relative overflow-y-auto max-h-[90vh] hidden">
+            <div class="flex items-center gap-3 accent-text mb-8 border-b border-white/10 pb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <h2 id="roadmap-title" class="text-xl font-black uppercase tracking-tighter">Protocolo</h2>
+            </div>
+            
+            <div id="roadmap-steps" class="space-y-8 mb-10 font-sans"></div>
+
+            <div class="bg-white/5 border accent-border p-5 mb-8">
+                <p class="text-[10px] accent-text font-bold tracking-widest mb-2 uppercase">Acción Inmediata:</p>
+                <p id="roadmap-action" class="text-[#fdfdfd] text-sm font-bold uppercase tracking-tight leading-tight"></p>
+            </div>
+
+            <button onclick="app.reset()" class="text-[10px] text-zinc-600 hover:text-white transition-all uppercase tracking-[0.4em] flex items-center justify-center gap-2 mx-auto">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Reiniciar Sistema
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        const app = {
+            currentQuestion: 0,
+            scores: [],
+            questions: [
+                {
+                    title: "UNIDAD DE DOLOR",
+                    question: "¿Cómo resuelve el usuario el problema hoy si prohibieran tu solución?",
+                    options: [
+                        { text: "No hay alternativa, es una necesidad nueva (Deseo)", score: 1 },
+                        { text: "Se gestiona con procesos manuales o herramientas genéricas", score: 2 },
+                        { text: "Causa pérdidas financieras o de tiempo críticas actualmente", score: 3 }
+                    ]
+                },
+                {
+                    title: "HAPPY PATH (FLUJO CRÍTICO)",
+                    question: "¿Puedes describir los 3 clics exactos que generan valor real?",
+                    options: [
+                        { text: "Tengo una lista larga de funcionalidades planeadas", score: 1 },
+                        { text: "Sé la función principal, pero el flujo es variable", score: 2 },
+                        { text: "Puedo diagramar la secuencia exacta de 3 pasos técnicos", score: 3 }
+                    ]
+                },
+                {
+                    title: "ORÁCULO DEL DATO",
+                    question: "¿Cuál es la métrica única de éxito para la semana 1?",
+                    options: [
+                        { text: "Feedback positivo y 'que el producto guste'", score: 1 },
+                        { text: "Número de registros o descargas totales", score: 2 },
+                        { text: "KPI de retención o ahorro de tiempo específico (Dato duro)", score: 3 }
+                    ]
+                },
+                {
+                    title: "PÍLDORA DEL VENENO",
+                    question: "¿Qué es lo que más odiará el usuario de tu primera versión?",
+                    options: [
+                        { text: "Nada, el producto debe ser perfecto y pulido al lanzarse", score: 1 },
+                        { text: "La interfaz austera y la falta de personalización", score: 2 },
+                        { text: "La ausencia de features secundarias, pero el núcleo resuelve el dolor", score: 3 }
+                    ]
+                },
+                {
+                    title: "ESCALABILIDAD DE SALIDA",
+                    question: "Si mañana tienes 1,000 usuarios, ¿qué es lo primero que se rompe?",
+                    options: [
+                        { text: "No lo he planteado aún, lo veremos al escalar", score: 1 },
+                        { text: "Los procesos manuales que aún operan en el backend", score: 2 },
+                        { text: "Un cuello de botella técnico ya identificado y mapeado", score: 3 }
+                    ]
+                }
+            ],
+            roadmapContent: {
+                'SOÑADOR': {
+                    title: "Protocolo: Validación de Dolor",
+                    steps: [
+                        "ENTREVISTAS DE FRUSTRACIÓN: Olvida tu solución. Habla con 10 usuarios sobre sus procesos actuales.",
+                        "MAPEO DE COSTO DE INACCIÓN: Calcula pérdidas por no tener solución.",
+                        "DEFINICIÓN DEL NÚCLEO: Reduce tu idea a una sola acción atómica."
+                    ],
+                    action: "NO CONSTRUIR TODAVÍA. Valida manualmente."
+                },
+                'PLANIFICADOR': {
+                    title: "Protocolo: Poda Técnica",
+                    steps: [
+                        "ELIMINACIÓN DE RUIDO: Borra el 80% de funcionalidades 'deseo'.",
+                        "DIAGRAMA DE 3 PASOS: Flujo técnico lineal e inquebrantable.",
+                        "MVP ANALÓGICO: Ejecuta el servicio vía manual antes de programar."
+                    ],
+                    action: "SIMPLIFICAR. Tu estructura es demasiado pesada."
+                },
+                'EJECUTOR': {
+                    title: "Protocolo: Ejecución Neón",
+                    steps: [
+                        "CONSTRUCCIÓN ATÓMICA: Desarrolla solo el núcleo del dolor.",
+                        "TEST DE ESTRÉS: Lanza a 5 usuarios y mide retención 48h.",
+                        "OPTIMIZACIÓN: Automatiza solo lo que se rompa primero."
+                    ],
+                    action: "EJECUTAR. Tienes claridad técnica para iterar."
+                }
+            },
+
+            startQuiz() {
+                this.showStep('step-quiz');
+                this.renderQuestion();
+            },
+
+            updateTheme(profile) {
+                const body = document.body;
+                if (!profile) {
+                    body.className = "selection:bg-white/20"; 
+                } else {
+                    body.className = `selection:bg-white/20 theme-${profile.toLowerCase()}`;
+                }
+                
+                setTimeout(() => {
+                    const styles = getComputedStyle(body);
+                    const accentColor = styles.getPropertyValue('--color-accent').trim();
+                    if (window.updateCanvasColor) window.updateCanvasColor(accentColor);
+                }, 100);
+            },
+
+            renderQuestion() {
+                const q = this.questions[this.currentQuestion];
+                document.getElementById('question-category').innerText = q.title;
+                document.getElementById('question-text').innerText = q.question;
+                document.getElementById('quiz-counter').innerText = `PROTOCOLO ${this.currentQuestion + 1}/05`;
+                document.getElementById('progress').style.width = `${((this.currentQuestion + 1) / this.questions.length) * 100}%`;
+
+                const container = document.getElementById('options-container');
+                container.innerHTML = '';
+                q.options.forEach((opt) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn w-full text-left p-4 group flex items-center justify-between text-sm';
+                    btn.innerHTML = `<span class="text-zinc-400 group-hover:text-white uppercase">${opt.text}</span>`;
+                    btn.onclick = () => this.handleAnswer(opt.score);
+                    container.appendChild(btn);
+                });
+            },
+
+            handleAnswer(score) {
+                this.scores.push(score);
+                if (this.currentQuestion < this.questions.length - 1) {
+                    this.currentQuestion++;
+                    this.renderQuestion();
+                } else {
+                    this.calculateResult();
+                }
+            },
+
+            calculateResult() {
+                const average = this.scores.reduce((a, b) => a + b, 0) / this.scores.length;
+                let profile = average <= 1.6 ? 'SOÑADOR' : (average <= 2.4 ? 'PLANIFICADOR' : 'EJECUTOR');
+
+                this.resultProfile = profile;
+                this.updateTheme(profile);
+                
+                document.getElementById('result-profile').innerText = profile;
+                document.getElementById('result-profile-inline').innerText = profile;
+                
+                const iconDiv = document.getElementById('result-icon');
+                const svgs = {
+                    'EJECUTOR': '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+                    'PLANIFICADOR': '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>',
+                    'SOÑADOR': '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg>'
+                };
+                iconDiv.innerHTML = svgs[profile];
+                this.showStep('step-result');
+            },
+
+            showRoadmap() {
+                const content = this.roadmapContent[this.resultProfile];
+                document.getElementById('roadmap-title').innerText = content.title;
+                document.getElementById('roadmap-action').innerText = content.action;
+                const stepsContainer = document.getElementById('roadmap-steps');
+                stepsContainer.innerHTML = '';
+                content.steps.forEach((s, i) => {
+                    stepsContainer.innerHTML += `<div class="flex gap-4"><span class="accent-text font-bold">0${i+1}.</span><p class="text-zinc-300 text-sm">${s}</p></div>`;
+                });
+                this.showStep('step-thank-you');
+            },
+
+            reset() {
+                this.currentQuestion = 0;
+                this.scores = [];
+                this.updateTheme(null);
+                this.showStep('step-start');
+            },
+
+            showStep(id) {
+                ['step-start', 'step-quiz', 'step-result', 'step-thank-you'].forEach(s => document.getElementById(s).classList.add('hidden'));
+                document.getElementById(id).classList.remove('hidden');
+            }
+        };
+
+        function initCanvas() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let currentColor = '#7739e2';
+            window.updateCanvasColor = (c) => currentColor = c;
+
+            function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize);
+            resize();
+
+            for (let i = 0; i < 70; i++) {
+                particles.push({ 
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height, 
+                    speed: Math.random() * 0.3 + 0.1, 
+                    size: Math.random() * 2 + 0.5 
+                });
+            }
+
+            function animate() {
+                ctx.fillStyle = 'rgba(0,0,0,0.1)'; 
+                ctx.fillRect(0,0,canvas.width, canvas.height);
+                ctx.fillStyle = currentColor;
+                particles.forEach(p => {
+                    ctx.beginPath(); 
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); 
+                    ctx.fill();
+                    p.y -= p.speed; 
+                    if (p.y < 0) p.y = canvas.height;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        window.onload = initCanvas;
+    </script>
+</body>
+</html>
