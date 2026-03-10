@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constela-Mente Aventuras | Caso de Estudio - Antropoeggers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+        
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #6D28D9;
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #F5F5F5;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .purple-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(139, 92, 246, 0.15);
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse-slow 15s infinite alternate;
+        }
+
+        @keyframes pulse-slow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-30px, 30px); }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden pt-24 pb-20">
+
+    <div class="blob top-0 right-0"></div>
+
+    <!-- Navegación simple de regreso -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
+        <a href="index.html#proyectos" class="text-sm font-bold text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Portafolio
+        </a>
+        <div class="text-xl font-bold font-heading tracking-tighter flex items-center gap-2">
+            <div class="w-6 h-6 purple-gradient rounded-md flex items-center justify-center">
+                <span class="text-white text-[10px]">AE</span>
+            </div>
+            ANTROPO<span class="text-[#8B5CF6]">EGGERS</span>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 mt-12">
+        
+        <!-- Cabecera del Proyecto -->
+        <header class="mb-20 text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/5 border border-white/10 mb-8 text-[#8B5CF6] text-4xl shadow-xl shadow-purple-500/10">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight">Constela-Mente <br><span class="text-[#8B5CF6]">Aventuras</span></h1>
+            <p class="text-xl text-gray-400 font-light max-w-2xl mx-auto mb-10">
+                Aplicación web responsiva que promueve el crecimiento personal mediante desafíos digitales gamificados y progresión por XP.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-widest text-white/70">
+                <span class="px-4 py-2 rounded-full border border-white/10 glass">Vite + React</span>
+                <span class="px-4 py-2 rounded-full border border-white/10 glass">Supabase</span>
+                <span class="px-4 py-2 rounded-full border border-white/10 glass">Tailwind CSS</span>
+                <span class="px-4 py-2 rounded-full border border-white/10 glass">shadcn-ui</span>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <div class="grid md:grid-cols-3 gap-12">
+            
+            <!-- Columna Izquierda: Detalles -->
+            <div class="md:col-span-2 space-y-12">
+                
+                <section>
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><i class="fa-solid fa-bullseye text-[#8B5CF6]"></i> El Objetivo</h2>
+                    <div class="glass p-8 rounded-3xl text-gray-300 leading-relaxed text-lg border-l-4 border-l-[#8B5CF6]">
+                        Desarrollar una aplicación web MVP (Producto Mínimo Viable) donde los usuarios puedan registrarse, completar retos presentados como <strong>tarjetas estilo pixel art</strong>, ganar puntos de experiencia (XP) y subir de nivel. Fomentando la participación a través de una tabla de posiciones pública competitiva.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><i class="fa-solid fa-layer-group text-[#8B5CF6]"></i> Funcionalidades Core</h2>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="glass p-6 rounded-2xl">
+                            <i class="fa-solid fa-user-shield text-2xl text-[#8B5CF6] mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Autenticación Segura</h3>
+                            <p class="text-sm text-gray-400">Inicio de sesión manejado vía Supabase, con perfiles de usuario que guardan nivel, progreso y fecha de registro.</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl">
+                            <i class="fa-solid fa-bolt text-2xl text-[#8B5CF6] mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Engine de Gamificación</h3>
+                            <p class="text-sm text-gray-400">Sistema de retos únicos. Las tarjetas voltean al hacer clic y al completarse otorgan XP automático (+100 XP = 1 Nivel).</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl">
+                            <i class="fa-solid fa-trophy text-2xl text-[#8B5CF6] mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Leaderboard Público</h3>
+                            <p class="text-sm text-gray-400">Tabla de posiciones accesible globalmente que lista a todos los usuarios ordenados por XP, destacando el Top 3.</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl">
+                            <i class="fa-solid fa-mobile-screen-button text-2xl text-[#8B5CF6] mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Diseño Adaptable</h3>
+                            <p class="text-sm text-gray-400">Interfaz completamente responsiva para escritorio y móvil, con modo minimalista enfocado en la usabilidad.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Columna Derecha: Sidebar Técnico -->
+            <div class="space-y-8">
+                
+                <div class="glass p-8 rounded-3xl border-white/5">
+                    <h3 class="text-sm uppercase tracking-widest text-gray-500 font-bold mb-6">Arquitectura de Datos</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-database mt-1 text-[#8B5CF6]"></i>
+                            <div>
+                                <strong class="text-white">PostgreSQL (Supabase)</strong>
+                                <p class="text-xs text-gray-500 mt-1">Estructura relacional: `users`, `challenges` y estado intermedio `user_challenge_progress`.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-code mt-1 text-[#8B5CF6]"></i>
+                            <div>
+                                <strong class="text-white">TypeScript</strong>
+                                <p class="text-xs text-gray-500 mt-1">Tipado estricto para las respuestas de la base de datos y componentes UI.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass p-8 rounded-3xl border-white/5 bg-[#111111]">
+                    <h3 class="text-sm uppercase tracking-widest text-[#8B5CF6] font-bold mb-4">El Enfoque Antropológico</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed italic">
+                        "La gamificación no trata de puntos vacíos, sino de validar el esfuerzo humano. Al transformar tareas cotidianas en pixel art, reducimos la fricción cognitiva y aumentamos la dopamina basada en logros."
+                    </p>
+                </div>
+
+                <a href="https://constela-mente-aventuras.lovable.app" target="_blank" class="w-full purple-gradient py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:scale-105 transition-transform shadow-lg shadow-purple-500/20">
+                    <i class="fa-solid fa-external-link-alt"></i> Visitar App en Vivo
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="text-center py-12 text-gray-600 text-sm font-bold tracking-widest uppercase mt-20 border-t border-white/5 max-w-4xl mx-auto">
+        &copy; 2026 ANTROPOEGGERS
+    </footer>
+
+</body>
+</html>
